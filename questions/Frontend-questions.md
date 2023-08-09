@@ -96,3 +96,21 @@ Arrow functions cannot use <ins>yield</ins> within their body and cannot be crea
 </li>
 </ul>
 
+### What is a promise?
+
+The Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
+
+A Promise is a proxy for a value not necessarily known when the promise is created. It allows you to associate handlers with an asynchronous action's eventual success value or failure reason. This lets asynchronous methods return values like synchronous methods: instead of immediately returning the final value, the asynchronous method returns a promise to supply the value at some point in the future.
+
+A Promise is in one of these states:
+<ul>
+<li>
+pending: initial state, neither fulfilled nor rejected.
+</li>
+<li>
+fulfilled: meaning that the operation was completed successfully.
+</li>
+<li>
+rejected: meaning that the operation failed.
+</li>
+</ul>
