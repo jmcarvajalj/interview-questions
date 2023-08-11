@@ -1,4 +1,3 @@
-// help me write a function in javascript that does the following, 
 // given a string "s" and a letter "t" that exists once or more times in the string "s", 
 // return ana array "d" where "d[idx] "is the minimun number of letters required to move 
 // from letter "s[idx]" to the closest letter "t" in "s"
