@@ -1,3 +1,5 @@
+# HTML and CSS
+
 # DOM manipulation with JS
 
 ### Understanding the DOM
@@ -758,7 +760,7 @@ Mixins are reusable blocks of styles that can be included in other selectors. Th
 }
 ```
 
-### Functions:
+### Functions
 
 Preprocessors often come with built-in or custom functions that allow you to perform calculations or manipulate values.
 
@@ -770,7 +772,7 @@ body {
 }
 ```
 
-### Importing:
+### Importing
 
 You can split your styles into multiple files and import them into a main stylesheet, which helps in organizing and maintaining your code.
 
@@ -786,7 +788,7 @@ body {
 }
 ```
 
-### Conditional Statements:
+### Conditional Statements
 
 Some preprocessors provide conditional statements, allowing you to write styles based on conditions.
 

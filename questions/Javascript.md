@@ -1,4 +1,4 @@
-# General JS questions
+# JavaScript
 
 ### ECMAScript vs JavaScript
 
@@ -160,6 +160,23 @@ A Promise is in one of these states:
     rejected: meaning that the operation failed.
     </li>
 </ul>
+
+### Promise.all()
+
+The Promise.all() static method takes an iterable of promises as input and returns a single Promise. This returned promise fulfills when all of the input's promises fulfill (including when an empty iterable is passed), withu an array of the fulfillment vales. It rejects when any of the input's promises rejects, with this first rejection reason.
+
+```javascript
+const promise1 = Promise.resolve(3);
+const promise2 = 42;
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 100, "foo");
+});
+
+Promise.all([promise1, promise2, promise3]).then((values) => {
+  console.log(values);
+});
+// Expected output: Array [3, 42, "foo"]
+```
 
 # Arrays
 
@@ -669,7 +686,7 @@ if (person.hasOwnProperty("name")) {
 }
 ```
 
-### Object.assign():
+### Object.assign()
 
 Assign new properties to an object
 
@@ -679,7 +696,7 @@ Object.assign(person, details);
 // person is now { name: 'John', age: 31, gender: 'male', city: 'New York', job: 'Engineer' }
 ```
 
-### Object.freeze():
+### Object.freeze()
 
 Freezes an object.
 

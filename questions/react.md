@@ -14,6 +14,8 @@ React applications are structured as a hierarchy of components. Each component e
 
 React uses a virtual DOM to efficiently update the actual DOM. Instead of updating the entire DOM when there is a change, React first updates a virtual representation of the DOM in memory and then calculates the most efficient way to update the actual DOM.
 
+keys in an iterable help find object easier, it improves performance.
+
 ### Declarative Syntax
 
 React uses a declarative approach, where you describe how your UI should look at any given point, and React takes care of updating the DOM to match that description. This is in contrast to an imperative approach where you would explicitly give step-by-step instructions on how to update the DOM.
@@ -206,6 +208,8 @@ In React, the lifecycle of a component refers to the series of phases that a com
 
 - useState: useState allows you to add state to your functional components.
 
+#### Functional Components
+
 ```jsx
 import React, { useState } from "react";
 
@@ -236,7 +240,27 @@ function MyComponent() {
 }
 ```
 
+#### Class Components
+
+- constructor()
+
+This is called when an instance of the component is being created. It is typically used for initializing state and binding event handlers.
+
+- static getDerivedStateFromProps(props, state)
+
+This is invoked right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or null to indicate that the new props do not require any state updates.
+
+- render()
+
+This is required and it is where the JSX is returned. It describes what the UI of the component should look like.
+
+- componentDidMount()
+
+This is called after the component is rendered to the DOM. It's a good place to perform side effects like fetching data from an API.
+
 ### Updating Phase
+
+#### Functional Components
 
 - useEffect (for updates): You can use useEffect with dependencies to perform actions after each render when specific dependencies have changed.
 
@@ -252,7 +276,31 @@ useEffect(() => {
 }, [dependency1, dependency2]);
 ```
 
+#### Class Components
+
+- static getDerivedStateFromProps(nextProps, nextState)
+
+Similar to the mounting phase, this is called before rendering when new props or state are received. It's used to update the state based on changes in props.
+
+- shouldComponentUpdate(nextProps, nextState)
+
+This method allows you to control whether the component should re-render or not. It can be used to optimize performance by preventing unnecessary renders.
+
+- render()
+
+Same as in the mounting phase, render is called to describe what the UI of the component should look like.
+
+- getSnapshotBeforeUpdate(prevProps, prevState)
+
+This is called right before the changes from the virtual DOM are to be reflected in the actual DOM. It allows you to capture some information from the DOM before it is potentially changed.
+
+- componentDidUpdate(prevProps, prevState, snapshot)
+
+This is called after the component is updated in the DOM. It's a good place to perform side effects like network requests based on changes to props or state.
+
 ### Unmounting Phase
+
+#### Functional Components
 
 - useEffect (cleanup): The cleanup function in useEffect is called when the component is about to be unmounted.
 
@@ -266,6 +314,24 @@ useEffect(() => {
   };
 }, []);
 ```
+
+#### Class Components
+
+- componentWillUnmount()
+
+This is called just before the component is removed from the DOM. It's used to perform cleanup tasks like cancelling network requests or cleaning up subscriptions.
+
+### Error Handling
+
+#### Class Components
+
+- static getDerivedStateFromError(error)
+
+This is called when there is an error during rendering. It allows the component to render an alternative UI in case of an error.
+
+- componentDidCatch(error, info)
+
+This is called after an error has been thrown during rendering. It's used to log the error information.
 
 ### Full example
 
@@ -309,6 +375,10 @@ function MyComponent() {
 
 export default MyComponent;
 ```
+
+In React 17 and later versions, the componentWillUnmount method and some others have been deprecated, and the new methods like componentDidCatch are introduced for error handling.
+
+It's worth noting that with the introduction of Hooks in React, you can achieve similar functionality as lifecycle methods using the useEffect hook and other hooks.
 
 ## Controlled component
 
@@ -510,7 +580,7 @@ function ExampleComponent() {
 
 Remember that hooks should be called at the top level of your component, not inside loops, conditions, or nested functions. Also, hooks should always be called in the same order to maintain consistency between renders.
 
-## Reconciliation Algotithm
+## Reconciliation Algorithm
 
 It seems like there might be a typo in your question. Did you mean "reconciliation algorithm in React"? If so, I can certainly provide some information about that.
 
