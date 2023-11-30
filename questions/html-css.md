@@ -1,6 +1,6 @@
 # HTML and CSS
 
-# DOM manipulation with JS
+## DOM manipulation with JS
 
 ### Understanding the DOM
 
@@ -309,7 +309,171 @@ let socket = new WebSocket("ws://example.com/socket");
 
 # CSS
 
-## TODO BASIC CSS SECTION
+Cascading Style Sheets (CSS) is a style sheet language used to describe the look and formatting of a document written in HTML or XML. CSS defines how elements should be displayed on a webpage, including layout, colors, fonts, and other visual aspects.
+
+### CSS Syntax
+
+CSS uses a rule-based syntax to apply styles to HTML elements. A CSS rule consists of a selector and a declaration block.
+
+```css
+selector {
+  property: value;
+}
+```
+
+- Selector: Targets the HTML element(s) you want to style.
+- Property: Specifies the style attribute you want to change.
+- Value: Defines the value for the specified property.
+
+### Selectors
+
+Selectors are patterns that match one or more elements on a page. They can be based on element names, classes, IDs, attributes, and more.
+
+#### Element Selector
+
+```css
+p {
+  color: blue;
+}
+```
+
+#### Class Selector
+
+```css
+.my-class {
+  font-size: 16px;
+}
+```
+
+#### ID Selector
+
+```css
+#my-id {
+  background-color: #f0f0f0;
+}
+```
+
+#### Combining Selectors
+
+```css
+h1,
+h2 {
+  text-align: center;
+}
+```
+
+### Box Model
+
+All HTML elements can be considered as boxes. The CSS box model consists of margin, border, padding, and content areas.
+
+```css
+.box {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #333;
+}
+```
+
+### Colors
+
+Colors can be specified by name, RGB values, hexadecimal values, or HSL values.
+
+```css
+h1 {
+  color: red;
+}
+
+p {
+  background-color: #f0f0f0;
+}
+```
+
+### Fonts
+
+You can control the font family, size, style, and weight using CSS.
+
+```css
+body {
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+}
+```
+
+### Layout
+
+CSS can be used to control the layout of your page, including positioning, display, and responsiveness.
+
+```css
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+### Responsive Design
+
+Use media queries to apply styles based on the characteristics of the device or screen.
+
+```css
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+}
+```
+
+### Transitions and Animations
+
+Add smooth transitions and animations to elements.
+
+```css
+.button {
+  transition: background-color 0.3s ease-in-out;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+```
+
+### Comments
+
+Add comments to your CSS for better code readability.
+
+```css
+/* This is a comment */
+```
+
+### Linking CSS to HTML
+
+Link your CSS file in the HTML document using the <link> tag.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Your Webpage</title>
+  </head>
+  <body>
+    <!-- Your HTML content here -->
+  </body>
+</html>
+```
 
 ## Flexbox
 
