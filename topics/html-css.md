@@ -743,7 +743,7 @@ Pseudo-classes provide a way to style elements based on their state or position 
 
 ## Pseudo-elements
 
-In CSS, pseudo-elements are used to style a specific part of an element. They allow you to style certain parts of an element without having to add extra HTML markup. Pseudo-elements are denoted by double colons (::) followed by the name of the pseudo-element.
+In CSS, pseudo-elements are used to style a specific part of an element. They allow you to style certain parts of an element without having to add extra HTML markup. Pseudo-elements are denoted by double colons ( :: ) followed by the name of the pseudo-element.
 
 ### ::before and ::after
 

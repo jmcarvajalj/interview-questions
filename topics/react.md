@@ -38,40 +38,40 @@ There are two main types of components in React:
 
 ### Functional Components
 
-- Can be stateful or stateless with the introduction of hooks in 16.8.
+-   Can be stateful or stateless with the introduction of hooks in 16.8.
 
-- Defined as JavaScript functions.
+-   Defined as JavaScript functions.
 
-- Receive props (inputs) as parameters and return React elements.
+-   Receive props (inputs) as parameters and return React elements.
 
-- Used for simpler components that don't need to manage state.
+-   Used for simpler components that don't need to manage state.
 
 Example of a functional component:
 
 ```jsx
 function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
+	return <h1>Hello, {props.name}</h1>;
 }
 ```
 
 ### Class Components:
 
-- Defined as ES6 classes.
+-   Defined as ES6 classes.
 
-- Can manage state and have access to lifecycle methods.
+-   Can manage state and have access to lifecycle methods.
 
-- Used for more complex components that need to maintain and manage their own state.
+-   Used for more complex components that need to maintain and manage their own state.
 
 ```jsx
 class Counter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 };
-  }
+	constructor(props) {
+		super(props);
+		this.state = { count: 0 };
+	}
 
-  render() {
-    return <p>Count: {this.state.count}</p>;
-  }
+	render() {
+		return <p>Count: {this.state.count}</p>;
+	}
 }
 ```
 
@@ -89,13 +89,13 @@ A pure component performs a shallow comparison of its current props and state wi
 import React, { PureComponent } from "react";
 
 class PureExample extends PureComponent {
-  render() {
-    return (
-      <div>
-        <p>{this.props.text}</p>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				<p>{this.props.text}</p>
+			</div>
+		);
+	}
 }
 ```
 
@@ -113,11 +113,11 @@ Here's an example:
 import React from "react";
 
 const FunctionalPureComponent = React.memo((props) => {
-  return (
-    <div>
-      <p>{props.text}</p>
-    </div>
-  );
+	return (
+		<div>
+			<p>{props.text}</p>
+		</div>
+	);
 });
 ```
 
@@ -131,16 +131,16 @@ Here's an example with a custom comparison function:
 import React from "react";
 
 const arePropsEqual = (prevProps, nextProps) => {
-  // Custom logic to determine if props are equal
-  return prevProps.text === nextProps.text;
+	// Custom logic to determine if props are equal
+	return prevProps.text === nextProps.text;
 };
 
 const FunctionalPureComponent = React.memo((props) => {
-  return (
-    <div>
-      <p>{props.text}</p>
-    </div>
-  );
+	return (
+		<div>
+			<p>{props.text}</p>
+		</div>
+	);
 }, arePropsEqual);
 ```
 
@@ -155,26 +155,26 @@ import React from "react";
 
 // Higher-Order Component
 const withLogger = (WrappedComponent) => {
-  // This is the returned component with added functionality
-  const EnhancedComponent = (props) => {
-    React.useEffect(() => {
-      console.log("Component is mounted!");
-      // Additional logic can be added here for cleanup or other side effects
-      return () => {
-        console.log("Component is unmounted!");
-      };
-    }, []);
+	// This is the returned component with added functionality
+	const EnhancedComponent = (props) => {
+		React.useEffect(() => {
+			console.log("Component is mounted!");
+			// Additional logic can be added here for cleanup or other side effects
+			return () => {
+				console.log("Component is unmounted!");
+			};
+		}, []);
 
-    // Render the original component with its props
-    return <WrappedComponent {...props} />;
-  };
+		// Render the original component with its props
+		return <WrappedComponent {...props} />;
+	};
 
-  return EnhancedComponent;
+	return EnhancedComponent;
 };
 
 // Functional Component
 const MyComponent = (props) => {
-  return <div>Hello, World!</div>;
+	return <div>Hello, World!</div>;
 };
 
 // Enhance the component with the HOC
@@ -182,21 +182,21 @@ const EnhancedComponent = withLogger(MyComponent);
 
 // Usage
 const App = () => {
-  return (
-    <div>
-      <EnhancedComponent />
-    </div>
-  );
+	return (
+		<div>
+			<EnhancedComponent />
+		</div>
+	);
 };
 ```
 
 In this example:
 
-- The withLogger HOC takes a functional component (WrappedComponent) as an argument.
+-   The withLogger HOC takes a functional component (WrappedComponent) as an argument.
 
-- It returns a new functional component (EnhancedComponent) that logs a message when it mounts and unmounts.
+-   It returns a new functional component (EnhancedComponent) that logs a message when it mounts and unmounts.
 
-- The EnhancedComponent renders the original WrappedComponent with its props.
+-   The EnhancedComponent renders the original WrappedComponent with its props.
 
 This pattern allows you to encapsulate common functionality in a separate HOC, making it reusable across different components. It's important to note that with the introduction of Hooks, some use cases for HOCs can be addressed using hooks like useEffect and useMemo. However, HOCs continue to be a valid and useful pattern in React development.
 
@@ -206,7 +206,7 @@ In React, the lifecycle of a component refers to the series of phases that a com
 
 ### Mounting Phase
 
-- useState: useState allows you to add state to your functional components.
+-   useState: useState allows you to add state to your functional components.
 
 #### Functional Components
 
@@ -214,47 +214,47 @@ In React, the lifecycle of a component refers to the series of phases that a com
 import React, { useState } from "react";
 
 function MyComponent() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  // ...
+	// ...
 }
 ```
 
-- useEffect: useEffect is used for side effects in your component, such as data fetching, subscriptions, or manually changing the DOM.
+-   useEffect: useEffect is used for side effects in your component, such as data fetching, subscriptions, or manually changing the DOM.
 
 ```jsx
 import React, { useEffect } from "react";
 
 function MyComponent() {
-  useEffect(() => {
-    // Perform side effects here
-    console.log("Component did mount");
+	useEffect(() => {
+		// Perform side effects here
+		console.log("Component did mount");
 
-    return () => {
-      // Clean up code (componentWillUnmount)
-      console.log("Component will unmount");
-    };
-  }, []); // Empty dependency array means it runs once after the initial render
+		return () => {
+			// Clean up code (componentWillUnmount)
+			console.log("Component will unmount");
+		};
+	}, []); // Empty dependency array means it runs once after the initial render
 
-  // ...
+	// ...
 }
 ```
 
 #### Class Components
 
-- constructor()
+-   constructor()
 
 This is called when an instance of the component is being created. It is typically used for initializing state and binding event handlers.
 
-- static getDerivedStateFromProps(props, state)
+-   static getDerivedStateFromProps(props, state)
 
 This is invoked right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or null to indicate that the new props do not require any state updates.
 
-- render()
+-   render()
 
 This is required and it is where the JSX is returned. It describes what the UI of the component should look like.
 
-- componentDidMount()
+-   componentDidMount()
 
 This is called after the component is rendered to the DOM. It's a good place to perform side effects like fetching data from an API.
 
@@ -262,39 +262,39 @@ This is called after the component is rendered to the DOM. It's a good place to 
 
 #### Functional Components
 
-- useEffect (for updates): You can use useEffect with dependencies to perform actions after each render when specific dependencies have changed.
+-   useEffect (for updates): You can use useEffect with dependencies to perform actions after each render when specific dependencies have changed.
 
 ```jsx
 useEffect(() => {
-  // Code to run on every update
-  console.log("Component updated");
+	// Code to run on every update
+	console.log("Component updated");
 
-  return () => {
-    // Cleanup code for the previous render
-    console.log("Previous render cleanup");
-  };
+	return () => {
+		// Cleanup code for the previous render
+		console.log("Previous render cleanup");
+	};
 }, [dependency1, dependency2]);
 ```
 
 #### Class Components
 
-- static getDerivedStateFromProps(nextProps, nextState)
+-   static getDerivedStateFromProps(nextProps, nextState)
 
 Similar to the mounting phase, this is called before rendering when new props or state are received. It's used to update the state based on changes in props.
 
-- shouldComponentUpdate(nextProps, nextState)
+-   shouldComponentUpdate(nextProps, nextState)
 
 This method allows you to control whether the component should re-render or not. It can be used to optimize performance by preventing unnecessary renders.
 
-- render()
+-   render()
 
 Same as in the mounting phase, render is called to describe what the UI of the component should look like.
 
-- getSnapshotBeforeUpdate(prevProps, prevState)
+-   getSnapshotBeforeUpdate(prevProps, prevState)
 
 This is called right before the changes from the virtual DOM are to be reflected in the actual DOM. It allows you to capture some information from the DOM before it is potentially changed.
 
-- componentDidUpdate(prevProps, prevState, snapshot)
+-   componentDidUpdate(prevProps, prevState, snapshot)
 
 This is called after the component is updated in the DOM. It's a good place to perform side effects like network requests based on changes to props or state.
 
@@ -302,22 +302,22 @@ This is called after the component is updated in the DOM. It's a good place to p
 
 #### Functional Components
 
-- useEffect (cleanup): The cleanup function in useEffect is called when the component is about to be unmounted.
+-   useEffect (cleanup): The cleanup function in useEffect is called when the component is about to be unmounted.
 
 ```jsx
 useEffect(() => {
-  // ...
+	// ...
 
-  return () => {
-    // Cleanup code (componentWillUnmount)
-    console.log("Component will unmount");
-  };
+	return () => {
+		// Cleanup code (componentWillUnmount)
+		console.log("Component will unmount");
+	};
 }, []);
 ```
 
 #### Class Components
 
-- componentWillUnmount()
+-   componentWillUnmount()
 
 This is called just before the component is removed from the DOM. It's used to perform cleanup tasks like cancelling network requests or cleaning up subscriptions.
 
@@ -325,11 +325,11 @@ This is called just before the component is removed from the DOM. It's used to p
 
 #### Class Components
 
-- static getDerivedStateFromError(error)
+-   static getDerivedStateFromError(error)
 
 This is called when there is an error during rendering. It allows the component to render an alternative UI in case of an error.
 
-- componentDidCatch(error, info)
+-   componentDidCatch(error, info)
 
 This is called after an error has been thrown during rendering. It's used to log the error information.
 
@@ -339,38 +339,38 @@ This is called after an error has been thrown during rendering. It's used to log
 import React, { useState, useEffect } from "react";
 
 function MyComponent() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    // Code to run on component mount
-    console.log("Component did mount");
+	useEffect(() => {
+		// Code to run on component mount
+		console.log("Component did mount");
 
-    // Cleanup code for componentWillUnmount
-    return () => {
-      console.log("Component will unmount");
-    };
-  }, []);
+		// Cleanup code for componentWillUnmount
+		return () => {
+			console.log("Component will unmount");
+		};
+	}, []);
 
-  useEffect(() => {
-    // Code to run on every update
-    console.log("Component updated");
+	useEffect(() => {
+		// Code to run on every update
+		console.log("Component updated");
 
-    // Cleanup code for the previous render
-    return () => {
-      console.log("Previous render cleanup");
-    };
-  }, [count]);
+		// Cleanup code for the previous render
+		return () => {
+			console.log("Previous render cleanup");
+		};
+	}, [count]);
 
-  const handleClick = () => {
-    setCount(count + 1);
-  };
+	const handleClick = () => {
+		setCount(count + 1);
+	};
 
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={handleClick}>Increment</button>
-    </div>
-  );
+	return (
+		<div>
+			<p>Count: {count}</p>
+			<button onClick={handleClick}>Increment</button>
+		</div>
+	);
 }
 
 export default MyComponent;
@@ -394,10 +394,10 @@ Start by initializing the state in your component constructor or using the useSt
 import React, { useState } from "react";
 
 function MyForm() {
-  const [inputValue, setInputValue] = useState("");
-  // You can have more state variables for different form inputs if needed
+	const [inputValue, setInputValue] = useState("");
+	// You can have more state variables for different form inputs if needed
 
-  // ... rest of the component code
+	// ... rest of the component code
 }
 ```
 
@@ -407,9 +407,9 @@ Connect the state to the value of the form input. This makes the input a control
 
 ```jsx
 <input
-  type="text"
-  value={inputValue}
-  onChange={(e) => setInputValue(e.target.value)}
+	type="text"
+	value={inputValue}
+	onChange={(e) => setInputValue(e.target.value)}
 />
 ```
 
@@ -421,21 +421,21 @@ When the form is submitted, you can use the state values for further processing.
 
 ```jsx
 function handleSubmit(event) {
-  event.preventDefault();
-  // Use inputValue or other state variables as needed
+	event.preventDefault();
+	// Use inputValue or other state variables as needed
 }
 
 // Inside your render or return function
 <form onSubmit={handleSubmit}>
-  {/* Your form inputs with controlled values */}
-  <input
-    type="text"
-    value={inputValue}
-    onChange={(e) => setInputValue(e.target.value)}
-  />
+	{/* Your form inputs with controlled values */}
+	<input
+		type="text"
+		value={inputValue}
+		onChange={(e) => setInputValue(e.target.value)}
+	/>
 
-  {/* Submit button */}
-  <button type="submit">Submit</button>
+	{/* Submit button */}
+	<button type="submit">Submit</button>
 </form>;
 ```
 
@@ -455,14 +455,14 @@ useState is used to add state to functional components. It returns an array with
 import React, { useState } from "react";
 
 function ExampleComponent() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
-    </div>
-  );
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button onClick={() => setCount(count + 1)}>Click me</button>
+		</div>
+	);
 }
 ```
 
@@ -474,22 +474,22 @@ useEffect is used to perform side effects in your function components. It's simi
 import React, { useEffect, useState } from "react";
 
 function ExampleComponent() {
-  const [data, setData] = useState([]);
+	const [data, setData] = useState([]);
 
-  useEffect(() => {
-    // Fetch data or perform other side effects
-    fetchData().then((result) => {
-      setData(result);
-    });
-  }, []); // The empty array means this effect runs once (on mount)
+	useEffect(() => {
+		// Fetch data or perform other side effects
+		fetchData().then((result) => {
+			setData(result);
+		});
+	}, []); // The empty array means this effect runs once (on mount)
 
-  return (
-    <div>
-      {data.map((item) => (
-        <p key={item.id}>{item.name}</p>
-      ))}
-    </div>
-  );
+	return (
+		<div>
+			{data.map((item) => (
+				<p key={item.id}>{item.name}</p>
+			))}
+		</div>
+	);
 }
 ```
 
@@ -501,14 +501,14 @@ useRef is used to persist values across renders without causing re-renders. It's
 import React, { useRef, useEffect } from "react";
 
 function ExampleComponent() {
-  const myRef = useRef(null);
+	const myRef = useRef(null);
 
-  useEffect(() => {
-    // Access or modify the DOM element
-    myRef.current.focus();
-  }, []);
+	useEffect(() => {
+		// Access or modify the DOM element
+		myRef.current.focus();
+	}, []);
 
-  return <input ref={myRef} />;
+	return <input ref={myRef} />;
 }
 ```
 
@@ -520,18 +520,18 @@ useCallback is used to memoize functions, preventing unnecessary re-renders of c
 import React, { useCallback, useState } from "react";
 
 function ExampleComponent() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  const increment = useCallback(() => {
-    setCount(count + 1);
-  }, [count]); // Only recreate the function if count changes
+	const increment = useCallback(() => {
+		setCount(count + 1);
+	}, [count]); // Only recreate the function if count changes
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={increment}>Click me</button>
-    </div>
-  );
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button onClick={increment}>Click me</button>
+		</div>
+	);
 }
 ```
 
@@ -543,18 +543,18 @@ useMemo is used to memoize values, preventing unnecessary calculations on every 
 import React, { useMemo, useState } from "react";
 
 function ExampleComponent() {
-  const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-  const squaredValue = useMemo(() => {
-    return count * count;
-  }, [count]); // Recalculate only if count changes
+	const squaredValue = useMemo(() => {
+		return count * count;
+	}, [count]); // Recalculate only if count changes
 
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <p>Squared Value: {squaredValue}</p>
-    </div>
-  );
+	return (
+		<div>
+			<p>Count: {count}</p>
+			<p>Squared Value: {squaredValue}</p>
+		</div>
+	);
 }
 ```
 
@@ -566,23 +566,21 @@ useLayoutEffect is similar to useEffect, but it fires synchronously after all DO
 import React, { useLayoutEffect, useRef } from "react";
 
 function ExampleComponent() {
-  const myRef = useRef();
+	const myRef = useRef();
 
-  useLayoutEffect(() => {
-    // Perform layout-dependent actions, e.g., measuring the DOM element
-    const width = myRef.current.offsetWidth;
-    console.log("Width:", width);
-  }, []);
+	useLayoutEffect(() => {
+		// Perform layout-dependent actions, e.g., measuring the DOM element
+		const width = myRef.current.offsetWidth;
+		console.log("Width:", width);
+	}, []);
 
-  return <div ref={myRef}>This is a div</div>;
+	return <div ref={myRef}>This is a div</div>;
 }
 ```
 
 Remember that hooks should be called at the top level of your component, not inside loops, conditions, or nested functions. Also, hooks should always be called in the same order to maintain consistency between renders.
 
 ## Reconciliation Algorithm
-
-It seems like there might be a typo in your question. Did you mean "reconciliation algorithm in React"? If so, I can certainly provide some information about that.
 
 In React, reconciliation is the process by which the virtual DOM is updated to reflect changes in the underlying data model. When state or props in a React component change, React needs to determine how to efficiently update the DOM to reflect these changes. The reconciliation algorithm is the set of rules and heuristics that React uses to perform this process.
 
@@ -618,90 +616,90 @@ Redux Toolkit is a set of tools and abstractions that makes working with Redux, 
 
 #### Redux Toolkit Overview
 
-- Simplifying Redux Setup: Redux Toolkit helps you set up a Redux store with minimal boilerplate. It includes a function called configureStore that automatically sets up your Redux store with good defaults.
+-   Simplifying Redux Setup: Redux Toolkit helps you set up a Redux store with minimal boilerplate. It includes a function called configureStore that automatically sets up your Redux store with good defaults.
 
-- Immutability Helpers: It provides the createSlice function that simplifies the process of creating Redux reducers and actions. This is particularly useful for managing immutable state updates.
+-   Immutability Helpers: It provides the createSlice function that simplifies the process of creating Redux reducers and actions. This is particularly useful for managing immutable state updates.
 
-- Async Logic Simplification: Redux Toolkit includes createAsyncThunk to simplify handling asynchronous logic (e.g., API calls) with less code.
+-   Async Logic Simplification: Redux Toolkit includes createAsyncThunk to simplify handling asynchronous logic (e.g., API calls) with less code.
 
-- DevTools Integration: It integrates with the Redux DevTools Extension out of the box, making it easier to debug and inspect the state of your application.
+-   DevTools Integration: It integrates with the Redux DevTools Extension out of the box, making it easier to debug and inspect the state of your application.
 
 #### Redux Slices
 
-- What is a Slice? A slice is a portion of your Redux store that deals with a specific piece of state and includes the reducer logic and actions related to that state. Slices encapsulate the logic for a particular feature or part of your application.
+-   What is a Slice? A slice is a portion of your Redux store that deals with a specific piece of state and includes the reducer logic and actions related to that state. Slices encapsulate the logic for a particular feature or part of your application.
 
-- Creating a Slice with createSlice: createSlice is a function provided by Redux Toolkit to create a slice. It takes an initial state, a set of reducer functions, and automatically generates action creators based on the reducers.
+-   Creating a Slice with createSlice: createSlice is a function provided by Redux Toolkit to create a slice. It takes an initial state, a set of reducer functions, and automatically generates action creators based on the reducers.
 
 ```javascript
 import { createSlice } from "@reduxjs/toolkit";
 
 const counterSlice = createSlice({
-  name: "counter",
-  initialState: 0,
-  reducers: {
-    increment: (state) => state + 1,
-    decrement: (state) => state - 1,
-  },
+	name: "counter",
+	initialState: 0,
+	reducers: {
+		increment: (state) => state + 1,
+		decrement: (state) => state - 1,
+	},
 });
 
 export const { increment, decrement } = counterSlice.actions;
 export default counterSlice.reducer;
 ```
 
-- Using the Slice in the Store: You can use the generated reducer and actions in your Redux store.
+-   Using the Slice in the Store: You can use the generated reducer and actions in your Redux store.
 
 ```javascript
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
 
 const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+	reducer: {
+		counter: counterReducer,
+	},
 });
 ```
 
-- Accessing Slice State: In components, you can access the state of a slice using the useSelector hook provided by the react-redux library.
+-   Accessing Slice State: In components, you can access the state of a slice using the useSelector hook provided by the react-redux library.
 
 ```javascript
 import { useSelector } from "react-redux";
 
 const CounterComponent = () => {
-  const count = useSelector((state) => state.counter);
-  // ...
+	const count = useSelector((state) => state.counter);
+	// ...
 };
 ```
 
 #### Async Operations with createAsyncThunk
 
-- createAsyncThunk simplifies the process of handling asynchronous operations, such as making API calls.
+-   createAsyncThunk simplifies the process of handling asynchronous operations, such as making API calls.
 
-- It generates action creators for three different states: pending, fulfilled, and rejected.
+-   It generates action creators for three different states: pending, fulfilled, and rejected.
 
 ```javascript
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const fetchUserData = createAsyncThunk("user/fetchData", async () => {
-  // API call or async operation
+	// API call or async operation
 });
 
 const userSlice = createSlice({
-  name: "user",
-  initialState: { data: {}, status: "idle" },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchUserData.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.data = action.payload;
-      })
-      .addCase(fetchUserData.rejected, (state) => {
-        state.status = "failed";
-      });
-  },
+	name: "user",
+	initialState: { data: {}, status: "idle" },
+	reducers: {},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchUserData.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(fetchUserData.fulfilled, (state, action) => {
+				state.status = "succeeded";
+				state.data = action.payload;
+			})
+			.addCase(fetchUserData.rejected, (state) => {
+				state.status = "failed";
+			});
+	},
 });
 
 export { fetchUserData };
@@ -716,21 +714,21 @@ import { useDispatch } from "react-redux";
 import { increment, decrement, fetchUserData } from "./counterSlice";
 
 const CounterComponent = () => {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const handleIncrement = () => {
-    dispatch(increment());
-  };
+	const handleIncrement = () => {
+		dispatch(increment());
+	};
 
-  const handleDecrement = () => {
-    dispatch(decrement());
-  };
+	const handleDecrement = () => {
+		dispatch(decrement());
+	};
 
-  const handleFetchData = () => {
-    dispatch(fetchUserData());
-  };
+	const handleFetchData = () => {
+		dispatch(fetchUserData());
+	};
 
-  // ...
+	// ...
 };
 ```
 
@@ -746,11 +744,11 @@ When passing callbacks to child components, use useCallback to memoize the callb
 
 ```jsx
 const MyComponent = () => {
-  const handleClick = useCallback(() => {
-    // Handle click
-  }, []);
+	const handleClick = useCallback(() => {
+		// Handle click
+	}, []);
 
-  return <ChildComponent onClick={handleClick} />;
+	return <ChildComponent onClick={handleClick} />;
 };
 ```
 
@@ -760,11 +758,11 @@ Define functions outside the render method to prevent re-creation on each render
 
 ```jsx
 const MyComponent = () => {
-  const handleClick = useCallback(() => {
-    // Handle click
-  }, []);
+	const handleClick = useCallback(() => {
+		// Handle click
+	}, []);
 
-  return <button onClick={handleClick}>Click me</button>;
+	return <button onClick={handleClick}>Click me</button>;
 };
 ```
 
@@ -774,7 +772,7 @@ Be explicit about the dependencies in the useEffect dependency array to prevent 
 
 ```jsx
 useEffect(() => {
-  // Effect logic
+	// Effect logic
 }, [dependency1, dependency2]);
 ```
 
@@ -784,7 +782,7 @@ When updating the state based on the previous state, use the functional form of 
 
 ```jsx
 const incrementCounter = () => {
-  setCounter((prevCounter) => prevCounter + 1);
+	setCounter((prevCounter) => prevCounter + 1);
 };
 ```
 
