@@ -129,3 +129,13 @@ const resultRecursive = binarySearchRecursive(
 
 console.log(`resultIterative: ${resultIterative}`); // Output: 6 (index of target 7 in the array)
 console.log(`resultRecursive: ${resultRecursive}`); // Output: 7 (index of target 8 in the array)
+
+// Time and Space Complexity:
+
+// Time Complexity:
+// Both the iterative and recursive versions have a time complexity of O(log n) 
+// because the search space is halved after each comparison.
+
+// Space Complexity:
+// The iterative version has a space complexity of O(1) since it only uses a few variables.
+// The recursive version has a space complexity of O(log n) due to the recursion stack.
