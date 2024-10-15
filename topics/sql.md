@@ -543,3 +543,32 @@ Using typescript we have all types safety features, and we can define all our mo
 **CAUTION**
 
 Everything has its own price. You need to understand that ORM is a layer between your code and Database and in the end it still uses SQL to execute queries. So technically it's may affect application performance. Also, it can generate not optimized SQL, or trigger some unnecessary sql requests. And when you need to write huge and complex SQL request you may face that it's simply impossible to use ORM for that, and you will be forced to use raw SQL query.
+
+## How to make a transaction in SQL
+
+Asi se hacen transacciónes en puro SQL
+
+```sql
+-- Desactiva autocommit
+SET autocommit = 0;
+
+-- Inicia la transacción
+START TRANSACTION;
+
+-- Primera consulta
+INSERT INTO usuarios (nombre, email) VALUES ('Juan', 'juan@example.com');
+
+-- Segunda consulta
+UPDATE cuentas SET saldo = saldo - 1000 WHERE id_usuario = 1;
+
+-- Ahora puedes decidir:
+
+-- - Si quieres confirmar los cambios: COMMIT;
+COMMIT
+
+-- - Si quieres revertir todo: ROLLBACK;
+ROLLBACK
+
+-- y preferiblemente activar de nuevo autocommit
+SET autocommit = 1;
+```
