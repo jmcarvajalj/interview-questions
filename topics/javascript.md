@@ -4,16 +4,16 @@
 
 ECMAScript
 
-- Definition: ECMAScript is a scripting language specification that was created to standardize JavaScript.
-- Purpose: It provides the rules that developers should follow to implement JavaScript. It defines the core features of the language.
-- Versioning: ECMAScript is versioned. For example, ECMAScript 6 (also known as ES6) introduced significant enhancements and new features to the language.
-- Standardization: ECMAScript is maintained by ECMA International, a standards organization. The specification is regularly updated to improve and evolve the language.
+-   Definition: ECMAScript is a scripting language specification that was created to standardize JavaScript.
+-   Purpose: It provides the rules that developers should follow to implement JavaScript. It defines the core features of the language.
+-   Versioning: ECMAScript is versioned. For example, ECMAScript 6 (also known as ES6) introduced significant enhancements and new features to the language.
+-   Standardization: ECMAScript is maintained by ECMA International, a standards organization. The specification is regularly updated to improve and evolve the language.
 
 JavaScript
 
-- Definition: JavaScript is an implementation of the ECMAScript specification. In other words, JavaScript is a programming language that conforms to the ECMAScript standard.
-- Scope: While ECMAScript sets the standard, JavaScript goes beyond the standard to include additional features and capabilities. It often encompasses things like the Document Object Model (DOM) for web browsers or APIs for server-side development.
-- Usage: When people refer to JavaScript, they are usually referring to the actual programming language in action, whether it's running in a web browser, on a server, or elsewhere.
+-   Definition: JavaScript is an implementation of the ECMAScript specification. In other words, JavaScript is a programming language that conforms to the ECMAScript standard.
+-   Scope: While ECMAScript sets the standard, JavaScript goes beyond the standard to include additional features and capabilities. It often encompasses things like the Document Object Model (DOM) for web browsers or APIs for server-side development.
+-   Usage: When people refer to JavaScript, they are usually referring to the actual programming language in action, whether it's running in a web browser, on a server, or elsewhere.
 
 In summary, ECMAScript is the standard, and JavaScript is one of the many implementations of that standard. Other languages, like JScript and ActionScript, also adhere to the ECMAScript specification. The distinction is important because it allows for multiple implementations of ECMAScript, fostering compatibility and interoperability between different environments.
 
@@ -39,21 +39,37 @@ The === operator is also used for equality comparison, but it does not perform t
 
 It checks both the value and the type of the operands. The values must be of the same type, and the values must be identical.
 
-Using === is generally considered good practice because it avoids the pitfalls of type coercion and leads to more predictable and safer code.
-
 ```javascript
 "5" === 5; // false, because the types are different
 ```
+
+Example of unexpected behavior:
+
+When using ==, you can encounter some unexpected comparisons, especially with null and undefined:
+
+```javascript
+console.log(null == undefined); // true (because they are considered loosely equal)
+console.log(null === undefined); // false (different types)
+```
+
+Using === is generally considered good practice because it avoids the pitfalls of type coercion and leads to more predictable and safer code.
 
 ### Types of variables in JS and their differences
 
 const: you cannot reassign values initialized with const. However, note that for objects and arrays declared with const, the reference to the object or array is constant, but the internal properties or elements can still be modified.
 
+```javascript
+const arr = [1, 2, 3];
+arr.push(4); // This works, as the array itself isn't reassigned.
+
+arr = [5, 6]; // Error: Assignment to constant variable.
+```
+
 let: you can reassign values initialized with let, let is block scoped.
 
 ```javascript
 if (true) {
-  let a = 1;
+	let a = 1;
 }
 
 /* this will throw an error since outside of the scope of the if, a is not defined */
@@ -64,11 +80,46 @@ var: you can reassign values initialized with var, var is not block scoped. It's
 
 ```javascript
 if (true) {
-  var a = 1;
+	var a = 1;
 }
 
 /* this will log the value 1 due to hoisting */
 console.log(a);
+```
+
+here's an example where var is not accesible
+
+```javascript
+function myFunction() {
+	var x = 10;
+	console.log(x); // This will print 10 inside the function
+}
+
+myFunction();
+
+console.log(x); // This will cause an error: x is not defined (because var is function-scoped)
+```
+
+Here's and example that uses them all
+
+```javascript
+function example() {
+	if (true) {
+		var x = 1; // function-scoped
+		let y = 2; // block-scoped
+		const z = 3; // block-scoped and cannot be reassigned
+
+		console.log(x); // 1
+		console.log(y); // 2
+		console.log(z); // 3
+	}
+
+	console.log(x); // 1 (accessible because of var)
+	console.log(y); // Error: y is not defined (block-scoped)
+	console.log(z); // Error: z is not defined (block-scoped)
+}
+
+console.log(x); //Error: x is not defined (function-scoped)
 ```
 
 ### What is hoisting and why does it exist?
@@ -77,26 +128,19 @@ Hoisting refers to the process whereby the interpreter appears to move the decla
 
 Hoisting is often considered a feature of var declarations as well, although in a different way. In colloquial terms, any of the following behaviors may be regarded as hoisting:
 
-<ol>
-    <li>
-    Being able to use a variable's value in its scope before the line it is declared. ("Value hoisting")
-    </li>
-    <li>
-    Being able to reference a variable in its scope before the line it is declared, without throwing a ReferenceError, but the value is always undefined. ("Declaration hoisting")
-    </li>
-    <li>
-    The declaration of the variable causes behavior changes in its scope before the line in which it is declared.
-    </li>
-    <li>
-    The side effects of a declaration are produced before evaluating the rest of the code that contains it.
-    </li>
-</ol>
+-   Being able to use a variable's value in its scope before the line it is declared. ("Value hoisting")
+
+-   Being able to reference a variable in its scope before the line it is declared, without throwing a ReferenceError, but the value is always undefined. ("Declaration hoisting")
+
+-   The declaration of the variable causes behavior changes in its scope before the line in which it is declared.
+
+-   The side effects of a declaration are produced before evaluating the rest of the code that contains it.
 
 ### Difference between class and object
 
 A class is a blueprint for declaring and creating objects. An object is a class instance that allows programmers to use variables and methods from inside the class. Memory is not allocated to classes. Classes have no physical existence.
 
-### What is the <ins>this</ins> keyword, and when do we use it?
+### What is the **_this_** keyword, and when do we use it?
 
 In JavaScript, the this keyword refers to an object.
 
@@ -104,42 +148,26 @@ Which object depends on how this is being invoked (used or called).
 
 The this keyword refers to different objects depending on how it is used:
 
-<ul>
-    <li>
-    In an object method, this refers to the object.
-    </li>
-    <li>
-    Alone, this refers to the global object.
-    </li>
-    <li>
-    In a function, this refers to the global object.
-    </li>
-    <li>
-    In a function, in strict mode, this is undefined.
-    </li>
-    <li>
-    In an event, this refers to the element that received the event.
-    </li>
-    <li>
-    Methods like call(), apply(), and bind() can refer this to any object.
-    </li>
-</ul>
+-   In an object method, this refers to the object.
+
+-   Alone, this refers to the global object.
+
+-   In a function, this refers to the global object.
+
+-   In a function, in strict mode, this is undefined.
+
+-   In an event, this refers to the element that received the event.
+
+-   Methods like call(), apply(), and bind() can refer this to any object.
 
 ### Difference between normal function and arrow function
 
 An arrow function expression is a compact alternative to a traditional function expression, with some semantic differences and deliberate limitations in usage:
 
-<ul>
-    <li>
-    Arrow functions don't have their own bindings to <ins>this</ins>, <ins>arguments</ins>, or <ins>super</ins>, and should not be used as methods.
-    </li>
-    <li>
-    Arrow functions cannot be used as constructors. Calling them with <ins>new</ins> throws a TypeError. They also don't have access to the <ins>new.target</ins> keyword.
-    </li>
-    <li>
-    Arrow functions cannot use <ins>yield</ins> within their body and cannot be created as generator functions.
-    </li>
-</ul>
+-   Arrow functions don't have their own bindings to **this**, **arguments**, or **super**, and should not be used as methods.
+-   Arrow functions cannot be used as constructors. Calling them with **new** throws a TypeError. They also don't have access to the **new.target** keyword.
+
+-   Arrow functions cannot use **yield** within their body and cannot be created as generator functions.
 
 ### What is a Promise?
 
@@ -149,17 +177,11 @@ A Promise is a proxy for a value not necessarily known when the promise is creat
 
 A Promise is in one of these states:
 
-<ul>
-    <li>
-    pending: initial state, neither fulfilled nor rejected.
-    </li>
-    <li>
-    fulfilled: meaning that the operation was completed successfully.
-    </li>
-    <li>
-    rejected: meaning that the operation failed.
-    </li>
-</ul>
+-   **pending:** initial state, neither fulfilled nor rejected.
+
+-   **fulfilled:** meaning that the operation was completed successfully.
+
+-   **rejected:** meaning that the operation failed.
 
 ### Promise.all()
 
@@ -169,11 +191,11 @@ The Promise.all() static method takes an iterable of promises as input and retur
 const promise1 = Promise.resolve(3);
 const promise2 = 42;
 const promise3 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 100, "foo");
+	setTimeout(resolve, 100, "foo");
 });
 
 Promise.all([promise1, promise2, promise3]).then((values) => {
-  console.log(values);
+	console.log(values);
 });
 // Expected output: Array [3, 42, "foo"]
 ```
@@ -213,6 +235,26 @@ let fruits = ["apple", "orange", "banana"];
 
 fruits[1] = "grape";
 console.log(fruits); // Output: ['apple', 'grape', 'banana']
+```
+
+## Destructuring arrays
+
+Destructuring allows you to extract values from arrays into distinct variables. It's a more concise and readable way to access individual elements or properties.
+
+```javascript
+const a = [1, 2];
+const [first, second] = a;
+
+console.log(first); // 1
+console.log(second); // 2
+```
+
+An extra points:
+
+-   Default Values: You can assign default values during destructuring
+
+```javascript
+const [first = 5, second = 10] = a;
 ```
 
 ## Array Methods
@@ -274,8 +316,8 @@ Description: Returns a shallow copy of a portion of an array.
 
 Parameters:
 
-- start (optional): The beginning index (inclusive) to start extracting elements. If omitted, it starts from the beginning of the array.
-- end (optional): The end index (exclusive) to stop extracting elements. If omitted, it extracts up to the end of the array.
+-   start (optional): The beginning index (inclusive) to start extracting elements. If omitted, it starts from the beginning of the array.
+-   end (optional): The end index (exclusive) to stop extracting elements. If omitted, it extracts up to the end of the array.
 
 ```javascript
 const fruits = ["apple", "banana", "cherry", "date"];
@@ -289,9 +331,9 @@ Description: Changes the contents of an array by removing or replacing existing 
 
 Parameters:
 
-- start: The index at which to start changing the array.
-- deleteCount: The number of elements to remove.
-- item1, item2, ... (optional): Elements to add to the array, starting from the start index.
+-   start: The index at which to start changing the array.
+-   deleteCount: The number of elements to remove.
+-   item1, item2, ... (optional): Elements to add to the array, starting from the start index.
 
 ```javascript
 const fruits = ["apple", "banana", "cherry", "date"];
@@ -305,8 +347,8 @@ Description: Splits a string into an array of substrings based on a specified se
 
 Parameters:
 
-- separator: Specifies the character or characters to use for separating the string.
-- limit (optional): An integer that specifies the number of splits. The remaining part of the string is not included in the result.
+-   separator: Specifies the character or characters to use for separating the string.
+-   limit (optional): An integer that specifies the number of splits. The remaining part of the string is not included in the result.
 
 ```javascript
 const sentence = "This is a sample sentence";
@@ -320,7 +362,7 @@ Description: Joins all elements of an array into a string, separated by the spec
 
 Parameters:
 
-- separator (optional): Specifies a string to separate each element of the array. If omitted, the array elements are joined with a comma.
+-   separator (optional): Specifies a string to separate each element of the array. If omitted, the array elements are joined with a comma.
 
 ```javascript
 const words = ["This", "is", "a", "sample", "sentence"];
@@ -334,7 +376,7 @@ Description: Combines two or more arrays, returning a new array without modifyin
 
 Parameters:
 
-- array1, array2, ...: Arrays to concatenate with the original array.
+-   array1, array2, ...: Arrays to concatenate with the original array.
 
 ```javascript
 const arr1 = [1, 2, 3];
@@ -349,7 +391,7 @@ Description: Sorts the elements of an array in place.
 
 Parameters:
 
-- compareFunction (optional): A function that defines the sort order. If omitted, the array is sorted lexicographically (alphabetically/numerically).
+-   compareFunction (optional): A function that defines the sort order. If omitted, the array is sorted lexicographically (alphabetically/numerically).
 
 ```javascript
 const numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 10];
@@ -363,7 +405,7 @@ Description: Creates a new array with all elements that pass the test implemente
 
 Parameters:
 
-- callback: A function that is called for each element in the array. The elements that pass the test are included in the new array.
+-   callback: A function that is called for each element in the array. The elements that pass the test are included in the new array.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -377,7 +419,7 @@ Description: Creates a new array with the results of calling a provided function
 
 Parameters:
 
-- callback: A function that is called once for each element in the array.
+-   callback: A function that is called once for each element in the array.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
@@ -391,8 +433,8 @@ Description: Applies a function against an accumulator and each element in the a
 
 Parameters:
 
-- callback: A function that is called for each element in the array, taking four arguments: accumulator, current value, current index, and the array itself.
-- initialValue (optional): The initial value of the accumulator. If omitted, the first element of the array is used as the initial accumulator value.
+-   callback: A function that is called for each element in the array, taking four arguments: accumulator, current value, current index, and the array itself.
+-   initialValue (optional): The initial value of the accumulator. If omitted, the first element of the array is used as the initial accumulator value.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
@@ -550,9 +592,9 @@ You can create objects in JavaScript using two methods:
 
 ```javascript
 let person = {
-  name: "John",
-  age: 30,
-  isStudent: false,
+	name: "John",
+	age: 30,
+	isStudent: false,
 };
 ```
 
@@ -591,16 +633,42 @@ You can delete a property from an object using the delete keyword
 delete person.isStudent;
 ```
 
+## Destructuring Objects
+
+Destructuring allows you to extract values from objects into distinct variables. It's a more concise and readable way to access individual elements or properties.
+
+```javascript
+const b = {
+	n1: 1,
+	n2: 2,
+};
+
+const { n1, n2 } = b;
+
+console.log(n1); // 1
+console.log(n2); // 2
+```
+
+An extra point
+
+-   You can rename variables when destructuring
+
+```javascript
+const { n1: numOne, n2: numTwo } = b;
+console.log(numOne); // 1
+console.log(numTwo); // 2
+```
+
 ### Object Methods
 
 Objects can also contain functions, known as methods
 
 ```javascript
 let person = {
-  name: "John",
-  sayHello: function () {
-    console.log("Hello!");
-  },
+	name: "John",
+	sayHello: function () {
+		console.log("Hello!");
+	},
 };
 
 person.sayHello(); // Output: Hello!
@@ -610,10 +678,10 @@ In modern JavaScript, you can use shorthand notation for defining methods:
 
 ```javascript
 let person = {
-  name: "John",
-  sayHello() {
-    console.log("Hello!");
-  },
+	name: "John",
+	sayHello() {
+		console.log("Hello!");
+	},
 };
 
 person.sayHello(); // Output: Hello!
@@ -625,7 +693,7 @@ You can loop through the properties of an object using for...in loop
 
 ```javascript
 for (let key in person) {
-  console.log(key + ": " + person[key]);
+	console.log(key + ": " + person[key]);
 }
 ```
 
@@ -642,9 +710,9 @@ console.log(person.hasOwnProperty("job")); // Output: false
 
 ```javascript
 const person = {
-  name: "John",
-  age: 30,
-  gender: "male",
+	name: "John",
+	age: 30,
+	gender: "male",
 };
 ```
 
@@ -682,7 +750,7 @@ Returns boolean if object has a property.
 
 ```javascript
 if (person.hasOwnProperty("name")) {
-  console.log("Object has property name");
+	console.log("Object has property name");
 }
 ```
 
@@ -711,22 +779,22 @@ In JavaScript, a closure is a combination of a function and the lexical environm
 
 Let's break down the concept of closures into key components:
 
-- Lexical Scope:
-  Lexical scope means that the scope of a variable is determined by its position within the source code. In JavaScript, functions create their own scope, and they can access variables from their own scope and any scope that encloses them.
+-   Lexical Scope:
+    Lexical scope means that the scope of a variable is determined by its position within the source code. In JavaScript, functions create their own scope, and they can access variables from their own scope and any scope that encloses them.
 
-- Functions as First-Class Citizens:
-  In JavaScript, functions are treated as first-class citizens, which means they can be assigned to variables, passed as arguments to other functions, and returned as values from other functions.
+-   Functions as First-Class Citizens:
+    In JavaScript, functions are treated as first-class citizens, which means they can be assigned to variables, passed as arguments to other functions, and returned as values from other functions.
 
 Now, let's look at an example to illustrate closures:
 
 ```javascript
 function outerFunction(x) {
-  // Inner function defined inside the outer function
-  function innerFunction(y) {
-    return x + y; // innerFunction has access to the 'x' variable from its outer scope
-  }
+	// Inner function defined inside the outer function
+	function innerFunction(y) {
+		return x + y; // innerFunction has access to the 'x' variable from its outer scope
+	}
 
-  return innerFunction; // Return the inner function (but don't invoke it)
+	return innerFunction; // Return the inner function (but don't invoke it)
 }
 
 // Create a closure by calling outerFunction with an argument
@@ -747,16 +815,16 @@ Here's a simple example of memoization in JavaScript using a memoization cache:
 
 ```javascript
 function memoizedFibonacci(n, memo = {}) {
-  if (n <= 1) {
-    return n;
-  }
+	if (n <= 1) {
+		return n;
+	}
 
-  if (memo[n] !== undefined) {
-    return memo[n];
-  }
+	if (memo[n] !== undefined) {
+		return memo[n];
+	}
 
-  memo[n] = memoizedFibonacci(n - 1, memo) + memoizedFibonacci(n - 2, memo);
-  return memo[n];
+	memo[n] = memoizedFibonacci(n - 1, memo) + memoizedFibonacci(n - 2, memo);
+	return memo[n];
 }
 
 // Example usage:
@@ -772,16 +840,16 @@ You can declare a class using the class keyword. Here's a simple example of a Pe
 
 ```javascript
 class Person {
-  // Constructor method is called when a new instance is created
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-  }
+	// Constructor method is called when a new instance is created
+	constructor(name, age) {
+		this.name = name;
+		this.age = age;
+	}
 
-  // Method to get the person's details
-  getDetails() {
-    return `${this.name} is ${this.age} years old.`;
-  }
+	// Method to get the person's details
+	getDetails() {
+		return `${this.name} is ${this.age} years old.`;
+	}
 }
 ```
 
@@ -808,16 +876,16 @@ Classes in JavaScript support inheritance. You can use the extends keyword to cr
 
 ```javascript
 class Student extends Person {
-  constructor(name, age, grade) {
-    // Call the parent class constructor using super()
-    super(name, age);
-    this.grade = grade;
-  }
+	constructor(name, age, grade) {
+		// Call the parent class constructor using super()
+		super(name, age);
+		this.grade = grade;
+	}
 
-  // Override the getDetails method
-  getDetails() {
-    return `${this.name} is ${this.age} years old and is in grade ${this.grade}.`;
-  }
+	// Override the getDetails method
+	getDetails() {
+		return `${this.name} is ${this.age} years old and is in grade ${this.grade}.`;
+	}
 }
 ```
 
@@ -827,9 +895,9 @@ You can also define static methods on a class. Static methods are called on the 
 
 ```javascript
 class Utility {
-  static add(x, y) {
-    return x + y;
-  }
+	static add(x, y) {
+		return x + y;
+	}
 }
 
 console.log(Utility.add(5, 3)); // Outputs: 8
@@ -843,15 +911,15 @@ In JavaScript, you can emulate abstract methods by defining a method in the base
 
 ```javascript
 class Animal {
-  makeSound() {
-    throw new Error("makeSound method must be implemented");
-  }
+	makeSound() {
+		throw new Error("makeSound method must be implemented");
+	}
 }
 
 class Dog extends Animal {
-  makeSound() {
-    return "Woof!";
-  }
+	makeSound() {
+		return "Woof!";
+	}
 }
 
 const dog = new Dog();
@@ -866,22 +934,22 @@ JavaScript does not have built-in support for interfaces, but you can achieve a 
 
 ```javascript
 const AnimalInterface = {
-  makeSound() {
-    throw new Error("makeSound method must be implemented");
-  },
-  move() {
-    throw new Error("move method must be implemented");
-  },
+	makeSound() {
+		throw new Error("makeSound method must be implemented");
+	},
+	move() {
+		throw new Error("move method must be implemented");
+	},
 };
 
 class Dog implements AnimalInterface {
-  makeSound() {
-    return "Woof!";
-  }
+	makeSound() {
+		return "Woof!";
+	}
 
-  move() {
-    return "Running";
-  }
+	move() {
+		return "Running";
+	}
 }
 
 const dog = new Dog();
@@ -897,17 +965,17 @@ JavaScript has several built-in data types that are used to represent different 
 
 ### Primitive Data Types
 
-- String: Represents a sequence of characters and is enclosed in backticks (\` \`), single (' ') or double quotes. For example: "Hello, World!".
+-   String: Represents a sequence of characters and is enclosed in backticks (\` \`), single (' ') or double quotes. For example: "Hello, World!".
 
-- Number: Represents numeric values. It can be an integer or a floating-point number. For example: 42 or 3.14.
+-   Number: Represents numeric values. It can be an integer or a floating-point number. For example: 42 or 3.14.
 
-- Boolean: Represents either true or false.
+-   Boolean: Represents either true or false.
 
-- Null: Represents the intentional absence of any object value. It is a special keyword indicating the absence of any object value.
+-   Null: Represents the intentional absence of any object value. It is a special keyword indicating the absence of any object value.
 
-- Undefined: Represents an uninitialized variable or a variable that has been declared but not assigned a value.
+-   Undefined: Represents an uninitialized variable or a variable that has been declared but not assigned a value.
 
-- Symbol: Introduced in ECMAScript 6, symbols are unique and immutable primitive values, often used as keys in objects.
+-   Symbol: Introduced in ECMAScript 6, symbols are unique and immutable primitive values, often used as keys in objects.
 
 ### Object
 
@@ -938,7 +1006,7 @@ let obj = { key: "value" };
 
 // Function
 function exampleFunction() {
-  console.log("This is a function.");
+	console.log("This is a function.");
 }
 
 // Array
