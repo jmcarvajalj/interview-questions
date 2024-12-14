@@ -4,7 +4,7 @@
 
 function minMovesToTarget(s, t) {
     // Create an array to store minimum moves required for each letter
-    const d = new Array(s.length);
+    const minMovesArray = new Array(s.length);
 
     // Find the positions of all occurrences of the target letter t
     const targetIndices = [];
@@ -17,9 +17,9 @@ function minMovesToTarget(s, t) {
     // Iterate through each letter in the input string s
     for (let i = 0; i < s.length; i++) {
         if (s[i] === t) {
-            d[i] = 0; // If the letter is the target letter, no moves are needed
+            minMovesArray[i] = 0; // If the letter is the target letter, no moves are needed
         } else {
-            d[i] = Infinity; // Initialize the minimum moves with a high value
+            minMovesArray[i] = Infinity; // Initialize the minimum moves with a high value
 
             // Calculate the minimum moves required to reach any occurrence of the target letter t
             for (const targetIndex of targetIndices) {
@@ -27,13 +27,13 @@ function minMovesToTarget(s, t) {
                 const distance = Math.abs(targetIndex - i);
 
                 // Update the minimum moves if the calculated distance is smaller than the current value
-                d[i] = Math.min(d[i], distance);
+                minMovesArray[i] = Math.min(minMovesArray[i], distance);
             }
         }
     }
 
     // Return the array containing the minimum moves for each letter
-    return d;
+    return minMovesArray;
 }
 
 // Test the function with an example input
