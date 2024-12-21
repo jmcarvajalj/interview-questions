@@ -17,6 +17,70 @@ JavaScript
 
 In summary, ECMAScript is the standard, and JavaScript is one of the many implementations of that standard. Other languages, like JScript and ActionScript, also adhere to the ECMAScript specification. The distinction is important because it allows for multiple implementations of ECMAScript, fostering compatibility and interoperability between different environments.
 
+## Event Loop in JavaScript
+
+The **Event Loop** is a fundamental part of JavaScript's concurrency model. It allows JavaScript to perform non-blocking operations, even though JavaScript is single-threaded. The Event Loop manages the execution of multiple chunks of your program's code, handling asynchronous events and operations.
+
+### How Does the Event Loop Work?
+
+In JavaScript, there are two main types of queues that manage the order in which tasks are executed:
+
+-   **Call Stack**: This is where all the currently executing functions are stored.
+-   **Event Queue (Task Queue)**: This queue holds tasks that need to be executed, such as I/O events, timeouts, etc.
+
+Here’s how the Event Loop works step by step:
+
+1. **Execute Synchronous Code**: JavaScript starts by executing any synchronous code (code in the call stack). This includes functions, loops, and assignments that don’t involve any asynchronous operations.
+2. **Handle Asynchronous Code**:
+
+    - When an asynchronous operation (like a `setTimeout`, HTTP request, or file read) is encountered, it is sent to the appropriate queue (e.g., the **callback queue** or **microtask queue**).
+    - The operation is not executed immediately but is scheduled for future execution after the synchronous code has been processed.
+
+3. **Check the Event Queue**:
+
+    - Once the **call stack** is empty, the **Event Loop** checks if there are any tasks in the **event queue** (task queue). If there are, it moves the task to the call stack and executes it.
+    - Tasks in the event queue are processed in a first-in, first-out (FIFO) order.
+
+4. **Microtasks**:
+
+    - After executing a task from the event queue, the Event Loop checks the **microtask queue** for any pending microtasks.
+    - Microtasks include promises' `.then()`, `.catch()`, and `.finally()` callbacks, and are given higher priority than regular tasks.
+    - The **microtask queue** is processed before the Event Loop moves to the next event loop cycle.
+
+5. **Repeat**: This cycle continues as long as there are tasks in either the event or microtask queue.
+
+### Example of Event Loop
+
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+	console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+	console.log("Promise");
+});
+
+fetch("https://jsonplaceholder.typicode.com/todos/1")
+	.then((response) => response.json())
+	.then((data) => {
+		console.log("Fetch:", data);
+	});
+
+console.log("End");
+```
+
+result
+
+```bash
+Start
+End
+Promise
+Timeout
+Fetch: { ... }
+```
+
 ### == vs ===
 
 == (Equality Operator):
