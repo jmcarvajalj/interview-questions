@@ -467,24 +467,17 @@ await client.query(`
 We created 2 records in Employee table and 2 records in Hardware table. But they are not linked yet, laptops are not assigned to anyone, because we did not know id of new records beforehand. So now lets try to assign machines to employees.
 
 ```javascript
-const employee = await client.query(`SELECT id from Employee where name = $1`, [
-	"John Wick",
-]);
+const employee = await client.query(`SELECT id from Employee where name = $1`, ["John Wick"]);
 
 console.log(employee.rows); // [ { id: 1 } ]
 
-await client.query(`UPDATE Hardware SET employeeId = $1 where "Serial" = $2`, [
-	employee.rows[0].id,
-	"serialNum1",
-]);
+await client.query(`UPDATE Hardware SET employeeId = $1 where "Serial" = $2`, [employee.rows[0].id, "serialNum1"]);
 ```
 
 First we execute request to get employee id, we use parameter as the best practice. An object is returned and data is located in rows property. Only id property is present because we selected only this column in query. Then we simply execute update statement and set employee id with this value. Now we can select employee and his laptop in one query if we need
 
 ```javascript
-const result = await client.query(
-	`SELECT * from Employee JOIN Hardware ON id = employeeId`
-);
+const result = await client.query(`SELECT * from Employee JOIN Hardware ON id = employeeId`);
 
 console.log(result.rows);
 /*
@@ -529,10 +522,7 @@ export class Book {
 const authorRepository = orm.em.getRepository(Author);
 const jon1 = await authorRepository.findOne(1); // Select * from Author where id = 1 limit 1
 const jon2 = await authorRepository.findOne({ name: "Jon Snow" }); //Select * from Author where name='Jon Snow' limit 1
-const jon3WithBook = await authorRepository.find(
-	{ name: "Jon Snow" },
-	{ populate: ["books"] }
-);
+const jon3WithBook = await authorRepository.find({ name: "Jon Snow" }, { populate: ["books"] });
 // Select * from Author where name='Jon Snow'
 // Select * from Book where authorId in (ids from previous call)
 // each author  will have book property in result
@@ -546,29 +536,29 @@ Everything has its own price. You need to understand that ORM is a layer between
 
 ## How to make a transaction in SQL
 
-Asi se hacen transacciónes en puro SQL
+This is how you make transactions in pure SQL
 
 ```sql
--- Desactiva autocommit
+-- Desactivates autocommit
 SET autocommit = 0;
 
--- Inicia la transacción
+-- Iniciates the transaction
 START TRANSACTION;
 
--- Primera consulta
+-- First query
 INSERT INTO usuarios (nombre, email) VALUES ('Juan', 'juan@example.com');
 
--- Segunda consulta
+-- Second query
 UPDATE cuentas SET saldo = saldo - 1000 WHERE id_usuario = 1;
 
--- Ahora puedes decidir:
+-- Now you decide:
 
--- - Si quieres confirmar los cambios: COMMIT;
-COMMIT
+-- - If you want to confirm the changes: COMMIT;
+COMMIT;
 
--- - Si quieres revertir todo: ROLLBACK;
-ROLLBACK
+-- - If you want to revert everything: ROLLBACK;
+ROLLBACK;
 
--- y preferiblemente activar de nuevo autocommit
+-- and preferably activate autocommit again
 SET autocommit = 1;
 ```
